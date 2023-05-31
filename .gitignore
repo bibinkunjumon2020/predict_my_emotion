@@ -44,3 +44,5 @@ venv/
 # specific to this project
 
 datasets
+/datasets
+datasets/
