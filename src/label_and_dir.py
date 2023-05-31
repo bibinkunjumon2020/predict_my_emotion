@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Dec 24 02:10:55 2019
+Created on 30 May 2023
+File: label_and_dir.py
+Author: Bibin Kunjumon
 
-@author: User
 """
 import pandas as pd
-from src import append_ext
+# from src import append_ext
+from append_ext import append_ext
 
 def label_and_dir():
     train_label = pd.read_csv('../datasets/labels/traininglabel.csv',dtype=str)

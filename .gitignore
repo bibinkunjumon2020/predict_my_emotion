@@ -1,2 +1,46 @@
-*.h5
-fer2013.csv
+
+env
+myenv
+/myenv
+.DS_Store
+.dockerignore
+Dockerfile
+__pycache__
+*.db
+build
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django-related files
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+media/
+env_portfolio
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment-specific files
+*.env
+.env.local
+.env.*.local
+.env.*.local.*
+!.env.example
+
+# Compiled Python files
+*.pyc
+
+# Dependencies
+venv/
+
+# specific to this project
+
+datasets/

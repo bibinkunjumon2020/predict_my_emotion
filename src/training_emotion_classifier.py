@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 21 02:29:44 2019
+Created on 30 May 2023
 File: training_emotion_classifier.py
-Author: Travis Tang (Voon Hao)
-Github: https://github.com/travistangvh
+Author: BIBIN KUNJUMON
 Description: Training of CNN model for emotion classification
 Note: The following code is adapted from Machine Learning Mastery in the link https://machinelearningmastery.com/check-point-deep-learning-models-keras/
 """
@@ -13,17 +12,23 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
 from keras_vggface.vggface import VGGFace
-from keras.optimizers import SGD
+# from keras.optimizers import SGD
+from keras.optimizers.legacy import SGD
 from keras.callbacks import ModelCheckpoint
-from src import label_and_dir
-from src import data_generator
-from src import data_downloading
+# from src import label_and_dir
+# from src import data_generator
+# from src import data_downloading
+import label_and_dir
+# import data_generator
+from data_generator import data_generator
+import data_downloading
 
 #downloading data from Kaggle
-data_downloading()
+data_downloading.data_download()
+# data_downloading.data_download()
 
 #importing data
-train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
+train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir.label_and_dir()
 train_generator, valid_generator, test_generator = data_generator(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
 #custom parameters
@@ -45,7 +50,7 @@ custom_vgg_model.summary()
 
 # Training the model with fer2013 data.
 custom_vgg_model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(lr=0.0001),
+              optimizer=SGD(learning_rate=0.0001),
               metrics=['accuracy'])
 
 #Creating a callback that saves a model when the validation loss decreases from the previous epoch.
@@ -54,12 +59,21 @@ checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_
 callbacks = [checkpoint]
 
 #training the model
-history = custom_vgg_model.fit_generator(
-            train_generator,
-            validation_data = valid_generator,
-            steps_per_epoch = 897,
-            epochs = 100,
-            validation_steps = 897,
-            verbose = 2,
-            callbacks=callbacks)
+# history = custom_vgg_model.fit_generator(
+#             train_generator,
+#             validation_data = valid_generator,
+#             steps_per_epoch = 897,
+#             epochs = 2,
+#             validation_steps = 897,
+#             verbose = 2,
+#             callbacks=callbacks)
 
+history = custom_vgg_model.fit(
+    train_generator,
+    validation_data=valid_generator,
+    steps_per_epoch=897,
+    epochs=2,
+    validation_steps=897,
+    verbose=2,
+    callbacks=callbacks
+)

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 21 02:29:44 2019
+Created on 30 May 2023
 File: data_downloading.py
-Author: Travis Tang (Voon Hao)
-Github: https://github.com/travistangvh
+Author: Bibin Kunjumon
 Description: Downloading the FER2013 dataset
 Note: This code is heavily adapted from Amine Horseman's the 'Convert FER2013 to Image and Landmarks' in the Facial Expression Recognition SVM git. 
 (From: https://github.com/amineHorseman/facial-expression-recognition-svm/blob/master/convert_fer2013_to_images_and_landmarks.py)
@@ -14,6 +13,7 @@ import pandas as pd
 import os
 import errno
 import imageio
+import time
 
 # initialization
 image_height = 48
@@ -44,9 +44,14 @@ def data_download():
     print( "importing csv file")
     
     data = pd.read_csv('../datasets/raw/fer2013.csv')
+    print(data.head(5))
+    time.sleep(2)
     
     for category in data['Usage'].unique():
+        # print(category)
+        # time.sleep(3)
         print( "converting set: " + category + "...")
+        time.sleep(2)
         # create folder
         if not os.path.exists(category):
             try:
@@ -62,20 +67,34 @@ def data_download():
         samples = category_data['pixels'].values
         labels = category_data['emotion'].values
         
+        # print("\ncategory:",category_data,"\nsamples:",samples[0],"\nlabels:",labels)
+        # time.sleep(3)
         # get images and extract features
         images = []
         labels_list = []
         landmarks = []
         hog_features = []
         hog_images = []
+        print("Length of samples,labels\n:::::")
+        print(len(samples),len(labels))
+        print("\nSelected labels:",SELECTED_LABELS)
+        # print(type(labels),type(samples))
+        time.sleep(2)
         for i in range(len(samples)):
+            # print("inside for loop:",i)
             try:
                 if labels[i] in SELECTED_LABELS: 
-                    image = np.fromstring(samples[i], dtype=int, sep=" ").reshape((image_height, image_width))
+                    print(i,"inside if class:")
+                    # image = np.fromstring(samples[i], dtype=int, sep=" ").reshape((image_height, image_width))
+                    image = np.fromstring(samples[i], dtype=np.uint8, sep=" ").reshape((image_height, image_width))
                     images.append(image)
+                    # print(image)
                     imageio.imwrite(OUTPUT_FOLDER_NAME + '/' + category + '/' + str(i) + '.jpg', image)
+                    # break
                     
             except Exception as e:
                 print( "error in image: " + str(i) + " - " + str(e))
-    
+                break
+        print("image count",len(images)) 
+        time.sleep(5)          
         np.save(OUTPUT_FOLDER_NAME + '/' + category + '/images.npy', images)

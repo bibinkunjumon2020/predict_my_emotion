@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 21 02:29:44 2019
+Created on 30 May 2023
 File: data_generator.py
-Author: Travis Tang (Voon Hao)
-Github: https://github.com/travistangvh
+Author: Bibin Kunjumon
 Description: Preprocessing data (into dataframe) for the training of the keras model
 Note: A tutorial on the flow_from_dataframe method can be found at https://medium.com/@vijayabhaskar96/tutorial-on-keras-flow-from-dataframe-1fd4493d237c
 """
@@ -59,4 +58,4 @@ def data_generator(train_dir, valid_dir, test_dir, train_label, valid_label, tes
                                                      shuffle=False,
                                                      class_mode=None,
                                                      color_mode='rgb')
-return train_generator, valid_generator, test_generator
+    return train_generator, valid_generator, test_generator

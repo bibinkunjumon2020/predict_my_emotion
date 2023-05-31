@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 21 02:29:44 2019
+Created on 30 May 2023
 File: emotion_webcam_demo.py
-Author: Travis Tang (Voon Hao)
-Github: https://github.com/travistangvh
+Author: Bibin Kunjumon
 Description: Real-time Emotion Classification Demo using Webcam
 """
 from tensorflow.keras import models
 import cv2
 import numpy as np
 from mtcnn.mtcnn import MTCNN
-import trained_models 
+# import trained_models 
 
 #Importing the model
-trained_model = models.load_model('../trained_models/trained_vggface.h5', compile=False)
+trained_model = models.load_model('../datasets/trained_models/trained_vggface.h5', compile=False)
 trained_model.summary()
 # prevents openCL usage and unnecessary logging messages
 cv2.ocl.setUseOpenCL(False)
